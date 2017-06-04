@@ -1,0 +1,106 @@
+<p id="notice"><%#= notice %></p>
+
+  <script type="text/javascript">
+    $(function() {
+      $("#datepicker").datepicker();
+    });
+    $(function() {
+      $( "#from" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
+    });
+
+  </script>
+
+  <div class="pgTitle">
+    <h2 class="f_l">詢問一覽</h2>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <form method="post" action="/inquiries/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>姓名：</th>
+        <td><input type="text" value="<%= @name %>" name="name" /></td>
+        <th>諮詢日期：</th>
+        <td colspan="5">
+          <label for="from" style="cursor:pointer">
+            <input type="text" id="from" name="from" value="<%= @from %>" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+          ～
+          <label for="to" style="cursor:pointer">
+            <input type="text" id="to" name="to" value="<%= @to %>" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="検索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  </form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @inquiries.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @inquiries, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="63px">NO.</th>
+        <!--<th>用戶名</th>-->
+        <th width="71px">姓名</th>
+        <th width="63px">性別</th>
+        <th width="183px">電話</th>
+        <th width="264px">郵箱</th>
+        <th width="121px">諮詢標題</th>
+        <th width="162px">諮詢日期</th>
+        <th width="72px">操作</th>
+      </tr>
+      <% if @inquiries.present? %>
+          <% @inquiries.each do |inquiry| %>
+            <tr>
+              <td align="center"><%= inquiry.id %></td>
+              <!--<td>login001</td>-->
+              <td><%= inquiry.name %></td>
+              <td align="center"><%= inquiry.sex %></td>
+              <td align="center"><%= inquiry.phone %></td>
+              <td><%= inquiry.email %></td>
+              <td><%= inquiry.title %></td>
+              <td align="center"><%= inquiry.inquiry_date.strftime("%Y/%m/%d") %></td>
+              <td class="action"><%= link_to "詳細", inquiry %></a></td>
+            </tr>
+          <% end %>
+      <% else %>
+      <tr><td colspan="8" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @inquiries.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @inquiries, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>
+

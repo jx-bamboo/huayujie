@@ -1,0 +1,87 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">信息詳細</h2>
+    <div class="completeBtn">
+      <input type="button" value="編輯" onclick="location.href='<%= edit_message_path %>'" class="button button-raised button-primary"/>
+      <input type="button" value="返回" onclick="location.href='/messages'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <div class="commonBox">
+    <table class="tform mb20">
+      <tr>
+        <th>標題</th>
+        <td><%= @message.title %></td>
+      </tr>
+      <tr>
+        <th>內容</th>
+        <td><%= @message.content %></td>
+      </tr>
+      <tr>
+        <th>開始時間</th>
+        <td><%= @message.start_time.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      </tr>
+      <!-- <tr>
+   <th>顯示天數</th>
+   <td>
+     30天
+   </td>
+ </tr>
+       <tr>
+   <th>結束時間</th>
+   <td>
+     2012-10-10&nbsp;&nbsp;16:22:44
+   </td>
+ </tr>-->
+      <tr>
+        <th>作成者</th>
+        <td><%= Admin.find_by_id(@message.admin_id).try(:name) %></td>
+      </tr>
+      <!--<tr>
+        <th>公開狀態</th>
+        <td>
+          草稿
+        </td>
+      </tr>
+            <tr>
+        <th>承認者</th>
+        <td>
+          張三
+        </td>
+      </tr>-->
+      <tr>
+        <th>推送對象</th>
+        <td><%= @message.get_send_object %></td>
+      </tr>
+      <!--<tr>
+        <th>説明</th>
+        <td>
+          説明説明説明説明
+        </td>
+      </tr>-->
+    </table>
+  </div>
+  <h4 class="s_title">■ 歷史更新</h4>
+  <div class="commonBox ">
+    <table class="list">
+      <tr>
+        <th>更新內容</th>
+        <th>更新時間</th>
+        <th>操作者</th>
+        <th>備考</th>
+      </tr>
+      <% if @msg_update.present? %>
+          <% @msg_update.each do |msg_update| %>
+            <tr>
+              <td align="center"><%= msg_update.update_type %></td>
+              <td align="center"><%= msg_update.update_date.strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td align="center"><%= Admin.find_by_id(msg_update.admin_id).try(:name) %></td>
+              <td align="center"><%= msg_update.memo %></td>
+            </tr>
+          <% end %>
+      <% else %>
+          <tr><td colspan="4">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+  </div>

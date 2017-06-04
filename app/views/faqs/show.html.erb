@@ -1,0 +1,22 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">常见问题詳細</h2>
+    <div class="completeBtn">
+      <input type="button" value="編輯" onclick="location.href='<%= edit_faq_path %>'" class="button button-raised button-primary"/>
+      <input type="button" value="返回" onclick="location.href='/faqs'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <div class="commonBox">
+    <table class="tform">
+      <tr>
+        <th>問題</th>
+        <td><%= @faq.ask %></td>
+      </tr>
+      <tr>
+        <th>回答</th>
+        <td><%= @faq.answer %></td>
+      </tr>
+    </table>
+  </div>

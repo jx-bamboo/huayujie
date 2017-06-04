@@ -1,0 +1,37 @@
+<!--<p id="notice"><%#= notice %></p>-->
+
+  <div class="pgTitle">
+    <h2 class="f_l">店舗詳細</h2>
+    <div class="completeBtn">
+      <input type="button" value="編輯" onclick="location.href='<%= edit_shop_path %>'" class="button button-raised button-primary"/>
+      <input type="button" value="返回" onclick="location.href='/shops'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <div class="commonBox mb20">
+    <table class="tform">
+      <tr>
+        <th>店舗名</th>
+        <td><%= @shops.name %></td>
+      </tr>
+      <tr>
+        <th>店鋪地址</th>
+        <td><%= @shops.address %></td>
+      </tr>
+      <tr>
+        <th>電話</th>
+        <td><%= @shops.phone.insert(4,"-") %></td>
+      </tr>
+      <tr>
+        <th>營業時間</th>
+        <td><%= @shops.business_hours %></td>
+      </tr>
+      <tr>
+        <th>圖片</th>
+        <td>
+          <%= image_tag @shops.get_attachment,:height => "80" %>
+        </td>
+      </tr>
+    </table>
+  </div>
+

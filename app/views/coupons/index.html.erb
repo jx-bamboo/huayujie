@@ -1,0 +1,131 @@
+<p id="notice"><%#= notice %></p>
+
+  <script type="text/javascript">
+    $(function() {
+      $("#datepicker").datepicker();
+
+//      $('#from').datepicker({ dateFormat: 'yy-mm-dd' });
+//      $('#to').datepicker({ dateFormat: 'yy-mm-dd' });
+//      var dateFormat = $('#from').datepicker('option', 'dateFormat');
+//      $('#from').datepicker('option', 'dateFormat', 'yy-mm-dd');
+    });
+    $(function() {
+      $( "#from" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        },
+        dateFormat: 'yy-mm-dd'
+      });
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        },
+        dateFormat: 'yy-mm-dd'
+      });
+    });
+  </script>
+
+  <div class="pgTitle">
+    <h2 class="f_l">優惠券一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="優惠券追加" onclick="location.href='<%= new_coupon_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+<form method="post" action="/coupons/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>優惠券名稱：</th>
+        <td><input type="text" value="<%= @name %>" name="name"/></td>
+        <!-- <th>狀態：</th>
+ <td>
+   <select class="sele_ret">
+               <option></option>
+               <option>未使用</option>
+     <option>已使用</option>
+     <option>無效</option>
+    </select>
+ </td>-->
+        <th>有效期限：</th>
+        <td colspan="3">
+          <label for="from" style="cursor:pointer">
+            <input type="text" id="from" value="<%= @from %>" name="from" style="cursor:pointer" class="W100">&nbsp;
+            <img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+          ～
+          <label for="to" style="cursor:pointer">
+            <input type="text" id="to" value="<%= @to %>" name="to" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label></td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+</form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @coupons.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @coupons, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="44">NO.</th>
+        <th width="237">圖片</th>
+        <th width="176">優惠券名稱</th>
+        <th width="181">店鋪名</th>
+        <th width="112">有效期限</th>
+        <th width="130">優惠券價格(元)</th>
+        <!--<th>狀態</th>-->
+        <th  width="13%" class="action">操作</th>
+      </tr>
+      <% if @coupons.present? %>
+        <% @coupons.each do |coupon| %>
+        <tr>
+          <td align="center"><%= coupon.id %></td>
+          <td align="center">
+            <%= image_tag coupon.get_attachment, :height => "80" %>
+          </td>
+          <td><%= coupon.name %></td>
+          <td>
+            <% coupon.get_shop_name.each do |c| %>
+              <%= p c %><br>
+            <% end %>
+            <%#= coupon.get_shop_name.join(" , ") %>
+          </td>
+          <td align="center"><%= coupon.limit_to.strftime("%Y-%m-%d") %></td>
+          <td align="right"><%= coupon.price %></td>
+          <!-- <td align="center"><font class="green">未使用</font></td>-->
+          <td class="action">
+            <%= link_to "詳細",coupon %> | <%= link_to '編輯', edit_coupon_path(coupon) %> | <%= link_to '刪除', coupon, method: :delete, data: { confirm: '您確定要刪除嗎？' } %>
+          </td>
+        </tr>
+        <% end %>
+    <% else %>
+          <tr><td colspan="7" align="center">沒有找到您要的結果。</td></tr>
+    <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @coupons.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @coupons, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link type="text/css" rel="stylesheet" href="/stylesheets/bootstrap.min.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/jquery-ui-1.10.4.custom.min.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/layout.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/admin.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/buttons.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/shadowbox.css" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/pagination.css" />
+
+    <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-ui-1.10.4.custom.js"></script>
+    <script type="text/javascript" src="/javascripts/common.js"></script>
+    <script type="text/javascript" src="/javascripts/datepicker.js"></script>
+
+    <script type="text/javascript" src="/javascripts/shadowbox/shadowbox.js"></script>
+    <script type="text/javascript" src="/javascripts/fckeditor/ckeditor.js"></script>
+
+    <script type="text/javascript">
+      Shadowbox.init({
+        skipSetup: true,
+        players: ["iframe"],
+        modal:  true
+      });
+    </script>
+
+  </head>
+
+  <title><%= change_title[2] %></title>
+  <body id="<%= change_title[0] %>" class="<%= change_title[1] %>">
+    <% if params[:action] == "login" || params[:action] == "shop_select" || params[:action] == "user_select" || params[:action] == "scan" || params[:action] == "input_money" %>
+    <% else %>
+    <div id="header">
+      <%= render "layouts/header" %>
+    </div>
+    <% end %>
+    <div id="content">
+      <%= yield %>
+    </div>
+    <% if params[:action] == "shop_select" || params[:action] == "scan" || params[:action] == "input_money" %>
+    <% else %>
+      <div id="footer"><%= render "layouts/footer" %></div>
+    <% end %>
+  </body>
+</html>

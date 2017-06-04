@@ -1,0 +1,61 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">會員詳細</h2>
+    <div class="completeBtn">
+      <input type="button" value="編輯" onclick="location.href='<%= edit_user_path(@user) %>'" class="button button-raised button-primary"/>
+      <input type="button" value="返回" onclick="javascript:history.go(-1)" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <div class="commonBox">
+    <table class="tform">
+      <tr>
+        <th>用戶名</th>
+        <td><%= @user.login %></td>
+      </tr>
+      <tr>
+        <th>姓名</th>
+        <td><%= @user.name %></td>
+      </tr>
+
+      <tr>
+        <th>郵箱</th>
+        <td>
+          <%= @user.email %>
+        </td>
+      </tr>
+      <tr>
+        <th>手機號碼</th>
+        <td>
+          <%= @user.phone %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>生日</th>
+        <td><%= @user.change_birthday[0] %>&nbsp;月&nbsp;&nbsp;<%= @user.change_birthday[1] %>&nbsp;日</td>
+      </tr>
+      <tr>
+        <th>性別</th>
+        <td><%= @user.get_sex %></td>
+      </tr>
+      <tr>
+        <th>職業</th>
+        <td>
+          <%= @user.profession %>
+        </td>
+      </tr>
+      <tr>
+        <th>年齡段</th>
+        <td><%= @user.age_segment %>
+        </td>
+      </tr>
+      <tr>
+        <th>推薦人電話</th>
+        <td>
+          <%= @user.recommend_person_phone %>
+        </td>
+      </tr>
+    </table>
+  </div>

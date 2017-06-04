@@ -1,0 +1,3 @@
+<%= form_tag '/news/update',:multipart => "true",:id => "news_form",method: "post" do %>
+  <%= render 'form', news: @news %>
+<% end %>

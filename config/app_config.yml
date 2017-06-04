@@ -1,0 +1,22 @@
+:per_page: 2
+:log_per_page: 20
+:window: 2
+
+:image_width: 692
+:image_height: 421
+
+:min_width: 300
+:min_height: 183
+
+:cover_default_url_no_image: "/attachment/cover/:style/missing.png"
+:cover_url: "/attachment/cover/:id/:style/cover.:extension" #"/attachment/cover/:id/:style/:basename.:extension"
+:cover_path: ":rails_root/public/attachment/cover/:id/:style/cover.:extension"  # :basename  => cover
+:cover_size: "110*160>"
+:image_type: ["image/x-png", "image/png", "image/pjpeg", "image/jpg", "image/jpeg", "image/bmp"]
+
+:data:
+   :backup_log: "{Rails.root.to_s}/log/backup.log"
+   :restore_log: "{Rails.root.to_s}/log/restore.log"
+:upload:
+   :restore_path: "{Rails.root.to_s}/restore"
+

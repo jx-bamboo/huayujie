@@ -1,0 +1,52 @@
+
+<%= form_for(category, url:"/categories/create", html:{method:"post"} ) do |f| %>
+  <% if category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(category.errors.count, "") %> 個錯誤發生:</h2>
+
+      <ul>
+      <% category.errors.full_messages.each do |message| %>
+        <li style="list-style: none;"><%= message.gsub(" ","") %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <div class="pgTitle">
+      <% if params[:action] == "new" || params[:action] == "create" %>
+          <h2 class="f_l">類別追加</h2>
+      <% else %>
+          <h2 class="f_l">類別編輯</h2>
+      <% end %>
+      <div class="completeBtn">
+        <% if params[:action] == "new" || params[:action] == "create" %>
+            <input type="submit" value="保存"  class="button button-raised button-primary"/>
+        <% else %>
+            <input type="submit" value="更新"  class="button button-raised button-primary"/>
+        <% end %>
+        <input type="button" value="取消" onclick="location.href='/categories'" class="button button-raised button-primary"/>
+      </div>
+      <hr class="cb" />
+    </div>
+    <p class="mb10"><span class="star_shop">「※」</span>號表示的是必填項。</p>
+    <div class="commonBox">
+      <table class="tform">
+        <tr>
+          <th>類別名<span class="star_span">※</span></th>
+          <td><%= f.text_field :name, :class=>"w260", :placeholder=> "日本米御結" %></td>
+        </tr>
+        <tr>
+          <th>備考</th>
+          <td>
+            <%= f.text_area :memo,:rows=>"10",:cols=>"99%" %>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <%#= f.submit %>
+  </div>
+<% end %>
+
+
+

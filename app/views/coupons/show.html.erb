@@ -1,0 +1,46 @@
+
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">優惠券詳細</h2>
+    <div class="completeBtn">
+      <input type="button" value="編輯" onclick="location.href='<%= edit_coupon_path(@coupon) %>'" class="button button-raised button-primary"/>
+      <input type="button" value="返回" onclick="javascript:history.go(-1)" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <div class="commonBox">
+    <table class="tform">
+      <tr>
+        <th>優惠券名稱</th>
+        <td>
+          <%= @coupons.name %>
+        </td>
+      </tr>
+      <tr>
+        <th>有效期限</th>
+        <td>
+          <%= @coupons.limit_from.strftime("%Y-%m-%d") %>  ～ <%= @coupons.limit_to.strftime("%Y-%m-%d") %>
+        </td>
+      </tr>
+
+      <tr>
+        <th>優惠券價格</th>
+        <td>
+          <%= @coupons.price %>
+        </td>
+      </tr>
+      <tr>
+        <th>圖片</th>
+        <td>
+          <%= image_tag @coupons.get_attachment, :height => "80" %>
+        </td>
+      </tr>
+      <tr>
+        <th>店鋪名</th>
+        <td>
+          <%= @coupons.get_shop_name.join(" , ") %>
+        </td>
+      </tr>
+    </table>
+  </div>

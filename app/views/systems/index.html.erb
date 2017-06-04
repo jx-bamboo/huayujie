@@ -1,0 +1,117 @@
+<p id="notice"><%#= notice %></p>
+
+  <script type="text/javascript">
+    $(function() {
+      $("#datepicker").datepicker();
+    });
+    $(function() {
+      $( "#from" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
+    });
+  </script>
+
+  <div class="pgTitle">
+    <h2 class="f_l">充值記錄一覽</h2>
+    <div class="completeBtn newBtn">
+      <!--<input type="button" value="充值"  class="button button-raised button-primary" style="width:148px;" onclick="openWithSBox('/systems/scan','600','500');"/>-->
+      <!--<input type="button" value="CSV下載"  class="button button-raised button-primary"/>-->
+      <%= form_tag '/systems/csv_export', multipart: true do %>
+          <input type="button" value="充值"  class="button button-raised button-primary" style="width:148px;" onclick="openWithSBox('/systems/scan','600','500');"/>
+          <%= hidden_field_tag :options, params.clone.delete_if{|key, value| %w(utf8 authenticity_token commit).include? key}.to_json %>
+          <input type="submit" value="CSV下載"  class="button button-raised button-primary"/>
+      <% end %>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <form method="post" action="/systems/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>用戶名：</th>
+        <td><input type="text" value="<%= @login %>" name="login" /></td>
+        <th>姓名：</th>
+        <td><input type="text" value="<%= @name %>" name="name" /></td>
+      </tr>
+      <tr>
+        <th>充值日期：</th>
+        <td colspan="3">
+          <label for="from" style="cursor:pointer">
+            <input type="text" id="from" name="from" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+          ～
+          <label for="to" style="cursor:pointer">
+            <input type="text" id="to" name="to" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="検索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  </form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @recharge.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @recharge, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="55">NO.</th>
+        <th width="111">用戶名</th>
+        <th width="62">姓名</th>
+        <th width="56">性別</th>
+        <th width="161">電話</th>
+        <th width="232">郵箱</th>
+        <th width="100">充值積分</th>
+        <th width="78">總積分</th>
+        <th width="144">充值日期</th>
+      </tr>
+      <% if @recharge.present? %>
+          <% @recharge.each do |recharge| %>
+            <tr>
+              <td align="center"><%= recharge.id %></td>
+              <td><%= recharge.get_user.login %></td>
+              <td><%= recharge.get_user.name %></td>
+              <td align="center"><% if recharge.get_user.sex == 1 %>男<% else %>女<% end %></td>
+              <td align="center"><%= recharge.get_user.phone %></td>
+              <td><%= recharge.get_user.email %></td>
+              <td align="center"><%= recharge.recharge_point %></td>
+              <td align="center"><%= recharge.total_point %></td>
+              <td align="center"><%= recharge.recharge_date.strftime("%Y/%m/%d") %></td>
+            </tr>
+          <% end %>
+      <% else %>
+        <tr><td colspan="9" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @recharge.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @recharge, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

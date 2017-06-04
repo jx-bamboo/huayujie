@@ -1,0 +1,137 @@
+<%#= form_for(news,html: {:id => "news_form"}) do |f| %>
+    <input type="hidden" name="id" value="<%= @news.id %>"/>
+  <% if news.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(news.errors.count, "") %> 個錯誤發生:</h2>
+
+      <ul>
+      <% news.errors.full_messages.each do |message| %>
+        <li style="list-style: none;"><%= message.gsub(" ","") %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+
+      <script language="javascript">
+        $(function() {
+          $("#datepicker").datepicker();
+        });
+        $(function() {
+          $( "#new_show_time_from" ).datepicker({
+            changeMonth: true,
+            numberOfMonths: 1,
+            onClose: function( selectedDate ) {
+              $( "#new_show_time_to" ).datepicker( "option", "minDate", selectedDate );
+            }
+          });
+          $( "#new_show_time_to" ).datepicker({
+            changeMonth: true,
+            numberOfMonths: 1,
+            onClose: function( selectedDate ) {
+              $( "#new_show_time_from" ).datepicker( "option", "maxDate", selectedDate );
+            }
+          });
+          $( "#new_new_date" ).datepicker({
+            changeMonth: true,
+            numberOfMonths: 1,
+            onClose: function( selectedDate ) {
+              $( "#new_new_date" ).datepicker( "option", "new_new_date", selectedDate );
+            }
+          });
+        });
+      </script>
+
+      <div class="pgTitle">
+        <% if params[:action] == "new" || params[:action] == "create" %>
+            <h2 class="f_l">新聞追加</h2>
+        <% else %>
+            <h2 class="f_l">新聞編輯</h2>
+        <% end %>
+        <div class="completeBtn">
+          <% if params[:action] == "new" || params[:action] == "create" %>
+              <input type="button" value="保存" onclick="this.form.action='/news/create'; this.form.target=''; this.form.submit();" class="button button-raised button-primary "/>
+              <input type="button" value="取消" onclick="location.href='/news'" class="button button-raised button-primary"/>
+          <% else %>
+              <input type="submit" value="更新" onclick="this.form.action='/news/update'; this.form.target=''; this.form.submit();" class="button button-raised button-primary"/>
+              <input type="button" value="取消" onclick="location.href='/news/<%= @news.id %>'" class="button button-raised button-primary"/>
+          <% end %>
+        </div>
+        <hr class="cb" />
+      </div>
+      <p class="mb10"><span class="star_shop">「※」</span>號表示的是必填項。</p>
+      <div class="commonBox">
+        <table class="tform">
+          <!--<tr>
+            <th>菜單名</th>
+            <td><input type="text" value="" class="w260"/> <input type="button" value="選擇" onclick="openWithSBox('menu_select.html','660','880');" class="button button-raised button-action button-tiny"/></td>
+          </tr>-->
+          <tr>
+            <th>日期 <span class="star_span">※</span></th>
+            <td>
+              <label for="datepicker" style="cursor:pointer">
+                <% if params[:action] == "new" || params[:action] == "create" %>
+                    <%= text_field :new, :new_date,class:"W100" %>
+                <% else %>
+                    <%= text_field :new, :new_date,class:"W100",:value => "#{@news.new_date.strftime("%Y/%m/%d")}" %>
+                <% end %>
+                <img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <th>顯示時間 <span class="star_span">※</span></th>
+            <td><label for="from" style="cursor:pointer">
+              <% if params[:action] == "new" || params[:action] == "create" %>
+                  <%= text_field :new, :show_time_from,class: "W100" %>
+              <% else %>
+                  <%= text_field :new, :show_time_from,class:"W100",:value => "#{@news.show_time_from.strftime("%Y/%m/%d")}" %>
+              <% end %>
+              <img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+            </label>
+              ～
+              <label for="to" style="cursor:pointer">
+                <% if params[:action] == "new" || params[:action] == "create" %>
+                    <%= text_field :new, :show_time_to,class: "W100" %>
+                <% else %>
+                    <%= text_field :new, :show_time_to,class:"W100",:value => "#{@news.show_time_to.strftime("%Y/%m/%d")}" %>
+                <% end %>
+                <!--<input type="text" id="to" name="to" style="cursor:pointer" class="W100">-->
+                <img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+              </label></td>
+          </tr>
+          <tr>
+            <th>標題 <span class="star_span">※</span></th>
+            <td><%= text_field :new, :title,class: "w500",:value => "#{@news.title}" %></td>
+          </tr>
+          <tr>
+            <th>顯示・不顯示</th>
+            <td><%= check_box :new, :show_flag,checked:"checked" %></td>
+          </tr>
+          <tr>
+            <th>新聞主圖</th>
+            <td>
+              <!--<input type="file" />-->
+              <div id="img_preview"><%= image_tag @news.get_attachment,:height => "80" %></div>
+              <%= file_field_tag "file_test", :onchange => "this.form.action='/shops/pre'; this.form.target='iframe'; this.form.submit();" %>
+              <iframe name="iframe" style="display:none;"></iframe>
+            </td>
+          </tr>
+          <tr>
+            <th>內容</th>
+            <td><textarea class="ckeditor" id="editor1" rows="10" cols="80" name="content" value="<%= @news.content %>"></textarea></td>
+          </tr>
+          <tr>
+            <th>URL</th>
+            <td>
+              <select name="f_url">
+                <% if params[:action] == "edit" %><option><%= news.get_url[0] %></option><% end %><option>http://</option><option>https://</option>
+              </select>
+              <input type="text" name="l_url" value="<%= news.get_url[1] if params[:action] == "edit" %>" placeholder="www.baidu.com" style="margin-left:5px;" class="w500" /></td>
+          </tr>
+        </table>
+      </div>
+    <%#= f.submit %>
+  </div>
+<%# end %>

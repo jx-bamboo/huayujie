@@ -1,0 +1,102 @@
+<%= form_for(message) do |f| %>
+  <% if message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(message.errors.count, "") %> 個錯誤發生:</h2>
+
+      <ul>
+      <% message.errors.full_messages.each do |message| %>
+        <li style="list-style: none;"><%= message.gsub(" ","") %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+
+      <script>
+        $(function() {
+          $("input[name=checkobj]").click(function(){
+            issetshoplist_theme2();
+          });
+
+          $("#message_start_time").datepicker();
+        });
+        function issetshoplist_theme2() {
+          var value0 = $('input:radio[value=person]:checked').val();
+          if(value0 != null) {$('#select_btn').show();}
+          else {$('#select_btn').hide();}
+        }
+      </script>
+
+      <div class="pgTitle">
+        <% if params[:action] == "new" || params[:action] == "create" %>
+            <h2 class="f_l">信息追加</h2>
+        <% else %>
+            <h2 class="f_l">信息編輯</h2>
+        <% end %>
+        <div class="completeBtn">
+          <% if params[:action] == "new" || params[:action] == "create" %>
+              <input type="submit" value="保存"onclick="" class="button button-raised button-primary"/>
+              <input type="button" value="取消" onclick="javascript:history.go(-1)" class="button button-raised button-primary"/>
+          <% else %>
+              <input type="submit" value="更新" onclick="" class="button button-raised button-primary"/>
+              <input type="button" value="取消" onclick="location.href='<%= message_path %>'" class="button button-raised button-primary"/>
+          <% end %>
+        </div>
+        <hr class="cb" />
+      </div>
+      <p class="mb10"><span class="star_shop">「※」</span>號表示的是必填項。</p>
+      <div class="commonBox">
+        <table class="tform">
+          <tr>
+            <th>標題 <span class="star_span">※</span></th>
+            <td><%= f.text_field :title,size:"70" %></td>
+          </tr>
+          <tr>
+            <th>內容 <span class="star_span">※</span></th>
+            <td><span id="attachments_fields">
+					<!-- <input type="button" name="deleted[1]" id="deleted1" value="削除" onclick="deletedFileField(this);return false;" />-->
+					<textarea class="ckeditor" id="editor1" rows="10" cols="80" name="content" value="<%= message.content %>"></textarea>
+					</span>
+            </td>
+          </tr>
+          <tr>
+            <th>開始時間 <span class="star_span">※</span></th>
+            <td><label for="datepicker" style="cursor:pointer">
+              <!--<input type="text" id="datepicker" name="datepicker" style="cursor:pointer" class="W100">&nbsp;-->
+              <div style="width: 190px;float:left;">
+              <%= f.text_field :start_time,class:"W100" %>
+              <% if params[:action] == "edit" %>
+                <%= f.text_field :start_time,class:"W100",value:"#{message.start_time.strftime("%Y/%m/%d")}" %>
+              <% end %>
+              </div>
+              <span style="line-height: 24px;"><img style="vertical-align:middle" src="/images/calendar.png" alt="" /></span>
+            </label></td>
+          </tr>
+          <!--<tr>
+            <th>顯示天數</th>
+            <td><input type="text" value="30" class="w58" readonly="readonly" id="display_day"/>
+              &nbsp;天 </td>
+          </tr>
+          <tr>
+            <th>結束時間</th>
+            <td><input type="text" value="2012-10-10 13:13:30" class="Wdate w260" onclick="get_day();" id="end_time" /></td>
+          </tr>-->
+          <tr>
+            <th>作成者</th>
+            <td><%= session[:admin]["name"] %></td>
+          </tr>
+          <tr>
+            <th>推送對象</th>
+            <td>
+              <input type="radio" id="all" name="checkobj" checked="checked"/> <label for="all">所有人</label>
+              <input type="radio" id="person" name="checkobj" value="person"/> <label for="person">個人</label>
+              <input type="hidden" value="" class="w260" name="send_object" id="valueReal" />
+              <input type="button" value="選擇" onclick="openWithSBox('/messages/user_select','600','800');" class="button button-raised button-action button-tiny" id="select_btn" style="display:none" />
+            </td>
+          </tr>
+        </table>
+      </div>
+    <%#= f.submit %>
+  </div>
+<% end %>

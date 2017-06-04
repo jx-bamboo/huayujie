@@ -1,0 +1,84 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">店舖一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="店鋪追加" onclick="location.href='<%=  new_shop_path %>'" class="button button-raised button-primary" />
+      <!--<input type="button" value="CSVインポート" onclick="location.href='/admin/views/shop/shop_csv.html'" />-->
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <form method="post" action="/shops/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>店舗名：</th>
+        <td><input type="text" value="<%= @name %>" name="name"/></td>
+        <th>店鋪地址：</th>
+        <td><input type="text" value="<%= @address %>" name="address"/></td>
+        <th>電話：</th>
+        <td><input type="text" value="<%= @phone %>" name="phone" id="admin_phone" maxlength="11" onkeyup="chkPrice(this)" onblur="chkLast();"/></td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  </form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @shops.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @shops, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list" width="1000px;">
+      <tbody>
+      <tr>
+        <th width="33px">NO.</th>
+        <th width="165px">圖片</th>
+        <th width="132px">店鋪名</th>
+        <th width="227px">店鋪地址</th>
+        <th width="100px">電話</th>
+        <th width="163px" style="word-wrap: break-word;word-break:normal;width:163px;">營業時間</th>
+        <th width="13%" class="action">操作</th>
+      </tr>
+      <% if @shops.present? %>
+      <% @shops.each do |shop| %>
+      <tr>
+        <td align="center"><%= shop.id %></td>
+        <td align="center">
+          <% if shop.get_attachment.present? %>
+            <%= image_tag shop.get_attachment,:height=>"80" %>
+          <% end %>
+        </td>
+        <td><%= shop.name %></td>
+        <td><%= shop.address %></td>
+        <td align="center"><%= shop.phone.insert(4,"-") %></td>
+        <td align="center"><%= shop.business_hours %></td>
+        <td class="action">
+          <%= link_to '詳細', shop %> | <%= link_to '編輯', edit_shop_path(shop) %> | <%= link_to '刪除', shop, method: :delete, data: { confirm: '您確定要刪除嗎？' } %>
+        </td>
+      </tr>
+      <% end %>
+      <% else %>
+        <tr><td colspan="7" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+      </tbody>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @shops.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @shops, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

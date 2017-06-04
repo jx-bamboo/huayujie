@@ -1,0 +1,34 @@
+<link type="text/css" rel="stylesheet" href="/stylesheets/sbox.css" />
+<script type="text/javascript" src="/javascripts/common.js"></script>
+<body marginwidth="0" marginheight="0" style="overflow-x: hidden;">
+<div id="swrap" style="width:480px;">
+	<div class="btn_close" id="btn_close">
+    	<a href="#" onclick="javascript:top.Shadowbox.close();">閉じる</a>
+    </div>
+	<!-- InstanceBeginEditable name="swrap" -->
+	<div class="pgTitle">
+		<h2 class="f_l">充值</h2>
+		<hr class="cb" />
+	</div>
+  <form id="form" onsubmit="return onsub();" method="post" multipart="true">
+    <div class="commonBox">
+    <p class="mb5" style="line-height:24px;">當前積分：<font style="font-size:20px;color:#BF0D00;">50</font></p>
+    <p>可以選擇的積分（可以自由選擇100至500間的積分）</p>
+    <p class="red mb10">※積分相當於1元。(最高可以充值2000)</p>
+
+    <p><input type="radio" name="pointsg" id="point01" value="100" /><label for="point01">100積分</label></p>
+    <p><input type="radio" name="pointsg" id="point02" value="200" /><label for="point02">200積分</label></p>
+    <p><input type="radio" name="pointsg" id="point03" value="300" /><label for="point03">300積分</label></p>
+    <p><input type="radio" name="pointsg" id="point04" value="400" /><label for="point04">400積分</label></p>
+    <p><input type="radio" name="pointsg" id="point05" value="500" /><label for="point05">500積分</label></p>
+    <p><input type="radio" name="pointsg" id="point06" value="600" /><label for="point06">
+      <input type="text" name="input_p" id="input_p" value="" onkeyup="chkPrice(this)" onblur="chkLast(this);onb();" />
+      <span id="span_i" style="color:red;"></span>
+    </label></p>
+    </div><br/>
+  </form>
+	<p align="center"><input type="button" value="充值" class="button button-raised button-primary" onclick="get_money();"/></p>
+	<!-- InstanceEndEditable -->
+
+</div>
+</body>

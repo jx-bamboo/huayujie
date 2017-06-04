@@ -1,0 +1,120 @@
+
+  <script type="text/javascript">
+    $(function() {
+      $("#datepicker").datepicker();
+    });
+    $(function() {
+      $( "#from" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
+    });
+
+  </script>
+  <div class="pgTitle">
+    <h2 class="f_l">購買記錄一覽</h2>
+    <div class="completeBtn newBtn">
+      <!--<input type="button" value="CSV下載"  class="button button-raised button-primary"/>-->
+      <%= form_tag '/systems/csv_export_buy', multipart: true do %>
+          <%= hidden_field_tag :options, params.clone.delete_if{|key, value| %w(utf8 authenticity_token commit).include? key}.to_json %>
+          <input type="submit" value="CSV下載"  class="button button-raised button-primary"/>
+
+      <% end %>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <form method="post" action="/systems/buy">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>用戶名：</th>
+        <td><input type="text" value="<%= @user_login %>" name="user_login" /></td>
+        <th>店鋪名：</th>
+        <td><input type="text" value="<%= @shop_name %>" name="shop_name" /></td>
+        <th>菜單名：</th>
+        <td><input type="text" value="<%= @menu_name %>" name="menu_name" /></td>
+
+      </tr>
+      <tr>
+        <th>購買日期：</th>
+        <td colspan="5">
+          <label for="from" style="cursor:pointer">
+            <input type="text" id="from" name="from" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+          ～
+          <label for="to" style="cursor:pointer">
+            <input type="text" id="to" name="to" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="検索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  </form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @buy.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @buy, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="41px">NO.</th>
+        <th width="83px">用戶名</th>
+        <th width="46px">姓名</th>
+        <th width="41px">性別</th>
+        <th width="119px">電話</th>
+        <th width="172px">郵箱</th>
+        <th width="170px">店鋪名</th>
+        <th width="178px">菜單名</th>
+        <th width="42px">價格</th>
+        <th width="107px">購買日期</th>
+      </tr>
+      <% if @buy.present? %>
+          <% @buy.each do |buy| %>
+            <tr>
+              <td align="center"><%= buy.id %></td>
+              <td><%= buy.get_user.login %></td>
+              <td><%= buy.get_user.name %></td>
+              <td align="center"><% if buy.get_user.sex == 1 %>男<% else %>女<% end %></td>
+              <td align="center"><%= buy.get_user.phone %></td>
+              <td><%= buy.get_user.email %></td>
+              <td><%= buy.shop.name %></td>
+              <td><%= buy.menu.name %></td>
+              <td align="right"><%= buy.price %></td>
+              <td align="center"><%= buy.buy_date.strftime("%Y/%m/%d") %></td>
+            </tr>
+          <% end %>
+      <% else %>
+        <tr><td colspan="10" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @buy.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @buy, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,118 @@
+
+<link type="text/css" rel="stylesheet" href="/stylesheets/sbox.css" />
+
+<div id="swrap" style="width:780px;overflow-x: hidden;">
+  <div class="btn_close">
+    <a href="#" onclick="javascript:top.Shadowbox.close();">閉じる</a>
+  </div>
+  <!-- InstanceBeginEditable name="swrap" -->
+  <div class="pgTitle">
+    <h2 class="f_l">會員一覽</h2>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>用戶名：</th>
+        <td><input type="text" value="" /></td>
+        <th>姓名：</th>
+        <td><input type="text" value="" /></td>
+      </tr>
+      <tr>
+        <th>郵箱：</th>
+        <td><input type="text" value="" /></td>
+        <th>性別</th>
+        <td>
+          <select class="sele_ret">
+            <option></option>
+            <option>男</option>
+            <option>女</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <input type="button" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num">15</font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <%= will_paginate @user_select %>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th><input type="checkbox" id="check"/><label for="check">全選</label></th>
+        <th>用戶名</th>
+        <th>姓名</th>
+        <th>性別</th>
+        <th>郵箱</th>
+        <!--<th width="75" class="action">操作</th>-->
+      </tr>
+      <% if @user_select.present? %>
+          <% @user_select.each do |us| %>
+            <tr>
+              <td align="center"><input type="checkbox" name="shop_id" value="<%= us.id %>_<%= us.name %>" /></td>
+              <td><%= us.login %></td>
+              <td><%= us.name %></td>
+              <td align="center"><%= us.get_sex %></td>
+              <td><%= us.email %></td>
+              <!--<td class="action">
+                <div class="completeBtn">
+                  <input type="button" value="選択" onclick="javascript:top.Shadowbox.close();" class="button button-raised button-action button-small"/>
+                </div>
+              </td>-->
+            </tr>
+          <% end %>
+      <% else %>
+        <tr><td colspan="5" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num">15</font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <%= will_paginate @user_select %>
+      </div>
+    </div><br/>
+    <div class="completeBtn" align="center">
+      <input type="button" value="選択" onclick="check();javascript:top.Shadowbox.close();" class="button button-raised button-action"/>
+    </div>
+    <!-- InstanceEndEditable -->
+  </div>
+  </div>
+<script>
+  var parentCheck = window.parent.$('#valueReal').val();
+  var checkId = document.getElementsByName("shop_id");
+  for(var i=0;i<checkId.length;i++){
+    var ch = checkId[i].value.split("_")[0];
+    if(parentCheck.indexOf(ch)>=0){
+      checkId[i].checked=true;
+    }
+  }
+</script>
+<script>
+  var valueShop = new Array;
+  var valueReal = new Array;
+  var valueShow = new Array;
+  function check(){
+    var shop_id = document.getElementsByName("shop_id");
+    for(var i=0;i<shop_id.length;i++){
+      if(shop_id[i].checked){
+        valueShop.push(shop_id[i].value);
+      }
+    };
+    for(var i=0;i<valueShop.length;i++){
+      valueShow.push(valueShop[i].split("_")[1]);
+      valueReal.push(valueShop[i].split("_")[0]);
+    }
+    window.parent.$('#valueReal').val(valueReal);
+    window.parent.$('#shopNameVal').val(valueShow);
+  }
+</script>

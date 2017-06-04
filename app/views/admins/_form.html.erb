@@ -1,0 +1,68 @@
+<%= form_for(admin) do |f| %>
+  <% if admin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(admin.errors.count, "") %> 個錯誤發生:</h2>
+
+      <ul>
+      <% admin.errors.full_messages.each do |message| %>
+        <li style="list-style: none;"><%= message.gsub(" ","") %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+
+      <div class="pgTitle">
+        <% if params[:action] == "new" || params[:action] == "create" %>
+            <h2 class="f_l">管理者追加</h2>
+        <% else %>
+            <h2 class="f_l">管理者編輯</h2>
+        <% end %>
+        <div class="completeBtn">
+          <% if params[:action] == "new" || params[:action] == "create" %>
+              <input type="submit" value="保存" onclick="" class="button button-raised button-primary"/>
+          <% else %>
+              <input type="submit" value="更新" onclick="" class="button button-raised button-primary"/>
+          <% end %>
+          <input type="button" value="取消" onclick="javascript:history.go(-1)" class="button button-raised button-primary"/>
+        </div>
+        <hr class="cb" />
+      </div>
+      <p class="mb10"><span class="star_shop">「※」</span>號表示的是必填項。</p>
+      <div class="commonBox">
+        <table class="tform">
+          <tr>
+            <th>用戶名<span class="star_span">※</span></th>
+            <td><%= f.text_field :login,class:"w260" %></td>
+          </tr>
+          <tr>
+            <th>姓名<span class="star_span">※</span></th>
+            <td><%= f.text_field :name,class:"w260" %></td>
+          </tr>
+          <tr>
+            <th>密碼<span class="star_span">※</span></th>
+            <td><%= f.password_field :password,class:"w260" %></td>
+          </tr>
+          <tr>
+            <th>密碼(確認)<span class="star_span">※</span></th>
+            <td><%= f.password_field :password_confirmation,class:"w260" %></td>
+          </tr>
+          <tr>
+            <th>郵箱<span class="star_span">※</span></th>
+            <td>
+              <%= f.email_field :email,class:"w260" %>
+            </td>
+          </tr>
+          <tr>
+            <th>電話</th>
+            <td>
+              <%= f.phone_field :phone,class:"w260",onkeyup:"chkPrice(this)", onblur:"chkLast();",placeholder:"12345678901" %>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+    <%#= f.submit %>
+  </div>
+<% end %>

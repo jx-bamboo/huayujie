@@ -1,0 +1,89 @@
+﻿@charset "utf-8";
+/* CSS Document */
+#content{width:800px;}
+#swrap{
+	position:relative;
+	margin:10px;
+	width:765px;
+}
+/* ========== btn_close閉じる ========= */
+.btn_close{
+	position:absolute;
+	right:0;
+	top:5px;
+}
+.btn_close a{
+	display:block;
+	width:55px;
+	height:17px;
+	background:url("/images/sbox//btn_close.gif") no-repeat;
+	text-indent:-9999px;
+	overflow:hidden;
+}
+
+/* ========== pgtitle ========= */
+.pgtitle{
+	margin:-10px -10px 15px;
+	font-size:14px;
+	color:#0066cc;
+	background:#CBD87C;
+}
+.pgtitle h2{
+	margin:0 10px;
+	padding:5px 10px 5px 20px;
+	background:url(/images/sbox/sign03.gif) no-repeat left center;
+}
+
+
+/* ========== tlist ========= */
+.tlist {
+	border-collapse:collapse;
+	background-color:#fff;
+}
+.tlist th, .tlist td {
+	padding:10px;
+	border:1px solid #b9cbdf;
+}
+.tlist th {
+	background-color: #F2F7D6;
+	font-size:14px;
+	font-weight:normal;
+	color:#000;
+}
+.tlist a {
+	color:#000;
+	text-decoration:underline;
+}
+
+/* ========== tform ========== */
+table.tform {
+	border-collapse:collapse;
+	background-color:#fff;
+}
+table.tform td, table.tform th {
+	border:1px solid #b9cbdf;
+	padding:10px;
+	font-weight:normal;
+	text-align:left;
+}
+table.tform th{
+	background-color:#CBD87C;	
+}
+table.tform textarea {
+	border:1px solid #cccccc;
+}
+table.tform span.fill{
+	color:#ff0000;
+}
+
+/* ========== 画像アップロード ========== */
+.drag_area{
+	padding:10px;
+	border:1px solid #CCC;
+	background-color:#FFC;
+	text-align:center;	
+}
+.file_add a{
+	color:#00f;
+	text-decoration:underline;	
+}

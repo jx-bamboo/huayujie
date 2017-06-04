@@ -1,0 +1,142 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+cn:
+  save_success: "更新成功。"
+  missing_data: "当前的数据不存在。"  
+  delete_success: "删除成功。"
+  create_success: "注册成功。"
+  save_failed: "更新失败。"
+  
+# 模型国际化      
+  activerecord:
+# model名 国际化
+    models:
+      page: "页面"
+      blog: "博客"
+      big: "大分类"
+      small category: "小分类"
+      shop: "店鋪管理"
+      menu: "菜單管理"
+      category: "類別管理"
+      coupon: "優惠券管理"
+      user: "會員管理"
+      new: "新聞管理"
+      admin: "管理者管理"
+      faq: "常見問題"
+      message: "信息管理"
+# model字段 国际化      
+    attributes:
+      shop:
+        name: "店鋪名"
+        address: "店鋪地址"
+        phone: "電話"
+        business_hours: "營業時間"
+      menu:
+        name: "菜單名"
+        category_id: "類別"
+        genre: "菜單種別"
+        price: "價格"
+        calorie: "卡路里"
+        salt: "鹽"
+        menu_image: "菜單圖片"
+        shop_menus: "店鋪名"
+      category:
+        name: "類別名"
+      coupon:
+        name: "優惠券名稱"
+        limit_from: "開始時間"
+        limit_to: "終了時間"
+        price: "優惠券價格"
+        send_object: "發送對象"
+        coupon_image: "優惠券圖片"
+        shop_coupons: "店鋪名"
+      user:
+        login: "用戶名"
+        name: "姓名"
+        phone: "手機號碼"
+        password: "密碼"
+        password_confirmation: "確認密碼"
+        email: "電子郵箱"
+        birthday: "生日"
+        sex: "性別"
+      new:
+        new_date: "日期"
+        show_time_from: "顯示開始時間"
+        show_time_to: "顯示結束時間"
+        title: "標題"
+      admin:
+        login: "用戶名"
+        name: "姓名"
+        password: "密碼"
+        password_confirmation: "確認密碼"
+        email: "電子郵箱"
+        phone: "電話號碼"
+      faq:
+        ask: "問題"
+        answer: "回答"
+      message:
+        title: "標題"
+        content: "內容"
+        start_time: "開始時間"
+      page:
+        title: "标题"
+        slug: "副标题"
+        body: "详细"
+        
+      blog:
+        title: "标题："
+        content: "内容："
+      big_category:
+        name: "大分类名："
+      small_category:
+        name: "小分类名："
+# model通用错误信息 国际化        
+    errors:
+      template: # ~ 2.3.5 backward compatible
+        header:
+          one: "有 1 个错误发生导致{{model}}无法被保存。"
+          other: "有 {{count}} 个错误发生导致{{model}}无法被保存。"
+        body: "如下字段出现错误："
+      messages:
+        inclusion: "不包含于列表中"
+        exclusion: "是保留关键字"
+        invalid: "是無效的"
+        confirmation: "與確認值不匹配"
+        accepted: "必须是可被接受的"
+        empty: "不能留空"
+        blank: "不能為空字符"
+        too_long: "過長（最長為 %{count} 個字符）"
+        too_short: "過短（最短為 %{count} 個字符）"
+        wrong_length: "长度非法（必须为 %{count} 个字符）"
+        taken: "已經被使用"
+        not_a_number: "不是数字"
+        not_an_integer: "必须是整数"
+        greater_than: "必须大于 %{count}"
+        greater_than_or_equal_to: "必须大于或等于 %{count}"
+        equal_to: "必须等于 %{count}"
+        less_than: "必须小于 %{count}"
+        less_than_or_equal_to: "必须小于或等于 %{count}"
+        odd: "必须为单数"
+        even: "必须为双数"
+        record_invalid: "校验失败: %{errors}"
+      full_messages:
+        format: "{{attribute}}{{message}}"           
+# model单独错误信息 国家化
+      models:
+        page:
+         attributes:
+           title:
+             blank: "ddddddddddddddddddddd" 
+# 辅助项 
+  helpers:
+    submit:
+      create: "创建一个{{model}}"
+      update: "更新一个{{model}}"
+# 自定义项  
+  page:
+    submit:
+      create: "创建"
+      update: "修改"
+      delete: "删除"
+      submit: "提交"     

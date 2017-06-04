@@ -1,0 +1,83 @@
+
+
+<%= form_for(shop,:html=>{:multipart => true,:method=>"post"}) do |f| %>
+    <%= hidden_field_tag "id",shop.try(:id) %>
+    <% if shop.errors.any? %>
+        <div id="error_explanation" style="width: 98%;">
+          <h2><%= pluralize(shop.errors.count, "") %> 個錯誤發生:</h2>
+
+          <ul>
+            <% shop.errors.full_messages.each do |message| %>
+                <li style="list-style: none;"><%= message.gsub(" ","") %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+  <div class="actions">
+    <div class="pgTitle">
+      <% if params[:action] == "new" || params[:action] == "create" %>
+          <h2 class="f_l">店鋪追加</h2>
+      <% else %>
+          <h2 class="f_l">店鋪編輯</h2>
+      <% end %>
+      <div class="completeBtn">
+        <% if params[:action] == "new" || params[:action] == "create" %>
+          <input type="button" value="保存" onclick="isShopPhone(); return false;" class="button button-raised button-primary "/>
+            <input type="button" value="取消" onclick="location.href='/shops'" class="button button-raised button-primary"/>
+        <% else %>
+          <input type="button" value="更新" onclick="this.form.action='/shops/update';this.form.target='';this.form.submit();" class="button button-raised button-primary"/>
+          <input type="button" value="取消" onclick="location.href='<%= shop_path %>'" class="button button-raised button-primary"/>
+        <% end %>
+      </div>
+      <hr class="cb" />
+    </div>
+    <p class="mb10"><span class="star_shop">「※」</span>號表示的是必填項。</p>
+
+    <div class="commonBox">
+      <table class="tform">
+        <tr>
+          <th>店舗名<span class="star_span">※</span></th>
+          <td><!--input type="text" size="80"--><%= f.text_field :name,:size=>"80",:value=>"#{@shop.name}" %></td>
+        </tr>
+        <tr>
+          <th>店鋪地址<span class="star_span">※</span></th>
+          <td>
+            <p><!--input type="text" name="addr" size="80"--><%= f.text_field :address,:size=>"80",:value=>"#{@shop.address}" %></p>
+          </td>
+        </tr>
+        <tr>
+          <th>電話<span class="star_span">※</span></th>
+          <td>
+            <input type="text" value="<%= @phone1 %>" size="5" name="phone1" id="phone1" maxlength="4" onkeyup="chkPrice(this)" onblur="chkLast();" />
+            -
+            <input type="text" value="<%= @phone2 %>" size="5" name="phone2" id="phone2" maxlength="4" onkeyup="chkPrice(this)" onblur="chkLast();" />
+            <%#= f.hidden_field :phone %>
+          </td>
+        </tr>
+        <tr>
+          <th>營業時間<span class="star_span">※</span></th>
+          <td>
+            <%= f.text_area :business_hours,:value=>"#{@shop.business_hours}",:rows=>"4",:cols=>"99%" %>
+          </td>
+        </tr>
+        <tr>
+          <th>圖片</th>
+          <td>
+            <%#= file_field_tag "file_test", :onchange => "$.ajax('/shops/pre.js', {data: 'file_test='+this.value});" %><br/>
+            <%= file_field_tag "file_test", :onchange => "this.form.action='/shops/pre'; this.form.target='iframe'; this.form.submit();" %>
+            <div id="img_preview"><%= image_tag shop.get_attachment, :height => "80" %></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <%#= f.submit %>
+  </div>
+<% end %>
+<iframe name="iframe" style="display:none;"></iframe>
+
+
+
+
+
+

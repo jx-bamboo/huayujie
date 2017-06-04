@@ -1,0 +1,89 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">會員一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="會員追加" onclick="location.href='<%= new_user_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+<form method="post" action="/users/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>用戶名：</th>
+        <td><input type="text" value="<%= @login %>" name="login" /></td>
+        <th>姓名：</th>
+        <td><input type="text" value="<%= @name %>" name="name" /></td>
+        <th>郵箱：</th>
+        <td><input type="text" value="<%= @email %>" name="email" /></td>
+      </tr>
+      <tr>
+        <th>手機號碼：</th>
+        <td><input type="text" value="<%= @phone %>" name="phone" /></td>
+        <th>性別：</th>
+        <td colspan="3">
+          <select class="sele_ret" name="sex">
+            <option></option>
+            <option value="1">男</option>
+            <option value="0">女</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+</form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @users.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @users, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="64">NO.</th>
+        <th width="121">用戶名</th>
+        <th width="72">姓名</th>
+        <th width="64">性別</th>
+        <th width="273">郵箱</th>
+        <th width="185">手機號碼</th>
+        <th class="action">操作</th>
+      </tr>
+      <% if @users.present? %>
+          <% @users.each do |user| %>
+            <tr>
+              <td align="center"><%= user.id %></td>
+              <td><%= user.login %></td>
+              <td><%= user.name %></td>
+              <td align="center"><%= user.sex %></td>
+              <td><%= user.email %></td>
+              <td align="center"><%= user.phone %></td>
+              <td class="action">
+                <%= link_to "詳細",user %> | <%= link_to "編輯", edit_user_path(user) %> | <%= link_to "刪除", user, method: :delete,data:{confirm:"您確定要刪除嗎？"}  %>
+              </td>
+            </tr>
+          <% end %>
+      <% else %>
+      <tr><td colspan="7" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @users.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @users, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

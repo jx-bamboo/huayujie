@@ -1,0 +1,32 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">常见问题一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="常见问题追加" onclick="location.href='<%= new_faq_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+
+  <table class="list">
+    <tr>
+      <th width="82px">NO.</th>
+      <th width="351px">問題</th>
+      <th width="286px">回答</th>
+      <th class="action">操作</th>
+    </tr>
+    <% if @faqs.present? %>
+      <% @faqs.each do |faq| %>
+        <tr>
+          <td align="center"><%= faq.id %></td>
+          <td><%= faq.ask %></td>
+          <td><%= faq.answer %></td>
+          <td class="action">
+            <%= link_to "詳細",faq %> | <%= link_to "編輯",edit_faq_path(faq) %> | <%= link_to "刪除",faq,method: :delete,data:{confirm:"您確定要刪除嗎？"} %>
+          </td>
+        </tr>
+        <% end %>
+    <% else %>
+        <tr><td colspan="4" align="center">沒有找到您要的結果。</td></tr>
+    <% end %>
+  </table>

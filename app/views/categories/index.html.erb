@@ -1,0 +1,66 @@
+
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">類別一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="類別追加" onclick="location.href='<%=  new_category_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+<form method="post" action="/categories/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>類別名：</th>
+        <td><input type="text" value="<%= @name %>" name="name"/></td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+</form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @categories.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @categories, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="46">NO.</th>
+        <th width="178">類別名</th>
+        <th width="670">備考</th>
+        <th class="action">操作</th>
+      </tr>
+      <% if @categories.present?%>
+        <% @categories.each do |category| %>
+        <tr>
+          <td align="center"><%= category.id %></td>
+          <td><%= category.name %></td>
+          <td><%= category.memo %></td>
+          <td class="action"><%= link_to "編輯", edit_category_path(category) %> | <%= link_to '刪除',category,method: :delete %></td>
+        </tr>
+        <% end %>
+      <% else %>
+        <tr><td colspan="4" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @categories.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @categories, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,162 @@
+#encoding:utf-8
+# Japanese translations for Ruby on Rails
+# by Akira Matsuda (ronnie@dio.jp)
+# AR error messages are basically taken from Ruby-GetText-Package. Thanks to Masao Mutoh.
+# contributors:
+#  - Tsutomu Kuroda (t-kuroda@oiax.jp)
+
+ja:
+  views:
+      pagination:
+        first: "«"
+        last: "»"
+        previous: "前へ"
+        next: "次へ"
+        truncate: "..."
+  id_pw_blank: "IDとパスワードを入力してください。"
+  id_blank: "IDを入力してください。"
+  pw_blank: "パスワードを入力してください。"
+  login_fail: "IDまたはパスワードが間違っています。"
+  will_paginate:
+      previous_label: "前へ"
+      next_label: "次へ"
+      first: "«"
+      last: "»"
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日(%a)"
+
+    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
+    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+
+    month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      db_time: "%Y-%m-%d %H:%M:%S"
+      short: "%Y-%m-%d"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
+      csv_time: "%Y年%m月%d日%H時%M分%S秒"
+      csv_short_time: "%Y年%m月%d日"
+    am: "午前"
+    pm: "午後"
+
+  messages:
+    failure_bulk_update_floor_id_for_doors: "「フロア名」がない入店ドアに「未設定」というフロア名をロット追加する際に、予期しないエラーが発生したため、更新に失敗しました。"
+    create_success: "登録しました。"
+    update_success: "更新しました。"
+    update_failed: "更新が失敗しました。"
+    delete_success: "削除しました。"
+    missing_data: "該当するデータが存在しません。"
+    invalid_login: "ログインIDまたはパスワードを正しく入力してください。"
+    invalid_to_date: "終了日をYYYY/MM/DD形式で入力してください。"
+    time_not_changed: "ご入力なさった日時はアプリ上の日時と同じなので、現在日時を変更する必要がありません。"
+    early_date: "当日以前の日付を入力してください。"
+    late_date: "終了日は開始日より早めに指定できません。"
+    no_data: "データが存在しません。"
+    delete_confirm: "削除してもよろしいですか？"
+    not_numbers_characters: "は英数字で入力してください。"
+    no_select: "を選択してください。"
+    create_failed: "登録が失敗しました。"
+    invalid_from_date: "開始日をYYYY/MM/DD形式で入力してください。"
+    validate_ip: "は半角数字で入力してください。（15桁以内でお願いします。）例：192.168.1.1"
+    delete_failed: "削除が失敗しました。"
+    invalid_date: "日付をYYYY/MM/DD形式で入力してください。"
+    late_time: "は開店時間より早めに指定できません。"
+    no_authority: "ログインユーザーは権限がありません。アクセスが拒否されました。"
+    not_a_number: "は半角数値で入力してください。"
+    no_file: "ファイルパスが見つかりません。"
+    select_floor: "「フロア」を選択してから、座標を設置してください。"
+    floor_not_be_destroy: "フロアに入店ドアが存在するため、削除できません。該当入店ドアを削除して、再度お試しください。"
+    store_not_be_destroy: "店舗にフロアが存在するため、削除できません。該当フロアを削除して、再度お試しください。"
+    have_no_prev_date: "%{date}に対応する前年同曜日がないです、前年実績を表示できません。"
+    have_no_prev_date_all: "%{date_from}と%{date_to}に対応する前年同曜日がないです、前年実績を表示できません。"
+    download_failed: "ダウンロードが失敗しました。"
+    no_exist_file: "Queueファイル（%{name}）は存在しません。"
+    not_a_number_or_english_char: "は半角英数字で入力してください。"
+    usb_copy_failed: "USBへの書き出しは失敗しました。"
+    usb_copy_success: "USBに書き出しました。"
+    copy_success: "コピーに成功しました。"
+    invalid_data: "は無効または存在しません。"
+    valid_port: "は1から8までの半角数字で入力してください。"
+    valid_ports: "は0から65535までの半角数字で入力してください。"
+    port_be_used: "が占有されています。"
+    invalid: "%{file}の形式は不正です。"
+    empty: "%{file}を選択してください。"
+    restore_success: "リストアしました。"
+    restore_failed: "リストアが失敗しました。"
+    backup_success: "バックアップしました。"
+    backup_failed: "バックアップが失敗しました。"
+    invalid_count_day: "は１日以上で入力してください。"
+    empty_store: "店舗を選択してください。"
+    empty_floor: "フロアを選択してください。"
+
+  activerecord:
+    models:
+      shop: "店舖"
+      menu: "菜單"
+      category: "類別"
+      coupon: "優惠券"
+    attributes:
+      shop:
+        name: "店舗名"
+        address: "店鋪地址"
+        phone: "電話"
+        business_hours: "營業時間"
+      menu:
+        name: "菜單名"
+        category_id: "類別"
+        genre: "菜單種別"
+        price: "價格"
+        calorie: "卡路里"
+        salt: "鹽"
+      category:
+        name: "類別名"
+      coupon:
+        name: "優惠券名稱"
+        limit_from: "開始時間"
+        limit_to: "終了時間"
+        price: "優惠券價格"
+        send_object: "發送對象"
+
+    errors:
+      template:
+        header:
+          one:   "%{model}にエラーが発生しました。"
+          other: "%{model}に%{count}つのエラーが発生しました。"
+        body: "次の項目を確認してください。"
+      messages:
+        taken: "は登録済です。"
+        record_invalid: "バリデーションに失敗しました。 %{errors}"
+        too_long: "は%{count}文字以内で入力してください。"
+        password_different: "とパスワード（再入力）が一致しません。"
+        too_short: "は%{count}文字以上で入力してください。"
+        taken: "は既に存在します。"
+        blank: "を入力してください。"
+        invalid: "の形式は不正です。"
+        not_a_number: "は半角数値で入力してください。"
+        photo_empty: "をアップロードしてください。"
+      full_messages:
+        format: "%{attribute}%{message}"
+      models:
+        ftp_log:
+          attributes:
+            ip_address:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: "とパスワード（再入力）が一致しません。"
+
+        admin:
+          attributes:
+            password_confirmation:
+              confirmation: "とパスワード（再入力）が一致しません。"

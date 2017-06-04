@@ -1,0 +1,120 @@
+<p id="notice"><%#= notice %></p>
+
+  <script language="javascript">
+    $(function() {
+      $("#datepicker").datepicker();
+    });
+    $(function() {
+      $( "#from" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
+    });
+    $(function(){
+      $("#menu_category_id option:eq(0)").css("color","#ccc");
+    })
+  </script>
+
+  <div class="pgTitle">
+    <h2 class="f_l">菜單一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="菜單追加" onclick="location.href='<%= new_menu_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+<form method="post" action="/menus/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>店鋪名：</th>
+        <td>
+          <input type="text" value="<%= @shops_name %>" name="shops_name" placeholder="神戶牛肉"/>
+        </td>
+        <th>菜單名：</th>
+        <td>
+          <input type="text" value="<%= @name %>" name="name" placeholder="宮保雞丁"/>
+        </td>
+        <th>類別：</th>
+        <td>
+          <%= collection_select(:menu, :category_id, Category.all,:id,:name,prompt:"請選擇類別", placeholder: "請選擇類別",class:"sele_ret") %>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+</form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @menus.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @menus, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="38">NO.</th>
+        <th width="148">圖片</th>
+        <th width="165">菜單名</th>
+        <th width="150">類別</th>
+        <th width="159">店鋪名</th>
+        <th width="67">價格(元)</th>
+        <th width="96">卡路里(kcal)</th>
+        <th width="47">鹽(g)</th>
+        <th width="13%" class="action">操作</th>
+      </tr>
+      <% if @menus.present? %>
+        <% @menus.each do |menu| %>
+          <tr>
+            <td align="center"><%= menu.id %></td>
+            <td align="center">
+              <%= image_tag menu.get_attachment, :height => '80' %>
+            </td>
+            <td><%= menu.name %></td>
+            <td>
+              <%= menu.category.try(:name) %>
+            </td>
+            <td>
+              <% menu.get_shop_name.each do |m| %>
+                <%= p m %><br>
+              <% end %>
+              <%#=  menu.get_shop_name.join(' , ') %></td>
+            <td align="center"><%= menu.price %></td>
+            <td align="center"><%= menu.calorie %></td>
+            <td align="center"><%= menu.salt %></td>
+            <td class="action" >
+              <%= link_to '詳細', menu %> | <%= link_to '編輯', edit_menu_path(menu) %> | <%= link_to '刪除', menu, method: :delete, data: { confirm: '您確定要刪除嗎？' } %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+          <tr><td colspan="9" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @menus.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @menus, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

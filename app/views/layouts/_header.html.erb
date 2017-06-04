@@ -1,0 +1,52 @@
+
+
+<div class="top">
+  <div>
+    <h1>後台管理系統</h1>
+    <ul>
+      <li>歡迎您：　<span class="userName"><a href="/admin/views/system/admin/edit.html"><%= session[:admin]["login"] %></a></span></li>
+      <!--<li><a href="/admin/views/user/pass_change.html">パスワードの変更</a></li>-->
+      <li>
+        <a href="/admins/logout">退出</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="mainNavi clearfix">
+  <h1>
+		<span>
+			<a href="/admin/views/shop/list.html"><img src="/images/logo.gif" alt="管理者機能" height="45" /></a><!--<label>管理者機能</label>-->
+		</span>
+  </h1>
+
+  <ul class="nav nav-pills f_r">
+    <li><a id="sn1" href="/shops">店舖管理</a></li>
+    <li class="dropdown">
+      <a id="sn2" class="dropdown-toggle" data-toggle="dropdown" href="#">菜單管理 <span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="/menus">菜單一覽</a></li>
+        <li><a href="/categories">類別一覽</a></li>
+      </ul>
+    </li>
+    <li><a id="sn3" href="/coupons">優惠券管理</a></li>
+    <li><a id="sn4" href="/users">會員管理</a></li>
+    <li><a id="sn5" href="/systems">充值記錄一覽</a></li>
+    <li><a id="sn6" href="/systems/buy">購買記錄一覽</a></li>
+    <li class="dropdown">
+      <a id="sn7" class="dropdown-toggle" data-toggle="dropdown" href="#">
+        系統管理 <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="/news">新聞管理</a></li>
+        <li><a href="/messages">信息管理</a></li>
+        <li><a href="/admins">管理者一覽</a></li>
+        <li><a href="/inquiries">詢問一覽</a></li>
+        <li><a href="/faqs">常見問題</a></li>
+        <li><a href="/rules">使用條款</a></li>
+        <!--<li class="divider"></li>
+        <li><a href="#">分离的链接</a></li>-->
+      </ul>
+    </li>
+  </ul>
+
+</div>

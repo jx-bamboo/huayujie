@@ -1,0 +1,116 @@
+<p id="notice"><%#= notice %></p>
+
+  <script language="javascript">
+    $(function() {
+      $("#datepicker").datepicker();
+    });
+    $(function() {
+      $( "#from" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
+    });
+
+  </script>
+
+  <div class="pgTitle">
+    <h2 class="f_l">新聞一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="新聞追加" onclick="location.href='<%= new_news_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <form method="post" action="/news/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>關鍵字：</th>
+        <td>
+          <input type="text" value="<%= @keyword %>" name="keyword" />
+        </td>
+        <th>日期：</th>
+        <td>
+          <label for="from" style="cursor:pointer">
+            <input type="text" id="from" name="from" value="<%= @from %>" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+          ～
+          <label for="to" style="cursor:pointer">
+            <input type="text" id="to" name="to" value="<%= @to %>" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  </form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @news.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @news, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="33px">NO.</th>
+        <th width="118px">新聞主圖</th>
+        <th width="200px">標題</th>
+        <th width="15%">日期</th>
+        <th width="20%">顯示時間</th>
+        <th>URL</th>
+        <th width="67px">顯示・不顯示</th>
+        <th width="13%" class="action">操作</th>
+      </tr>
+      <% if @news.present? %>
+          <% @news.each do |new| %>
+            <tr>
+              <td align="center"><%= new.id %></td>
+              <td align="center"><%= image_tag new.get_attachment,:height=>"80" %></td>
+              <td><%= new.title %></td>
+              <td align="center"><%= new.new_date.strftime("%Y-%m-%d") %></td>
+              <td align="center"><%= new.show_time_from.strftime("%Y-%m-%d") %><br/>～<br/><%= new.show_time_to.strftime("%Y-%m-%d") %></td>
+              <td><a href="#"><%= new.url %></a></td>
+              <td align="center">
+                <% if new.get_show_flag.present? %>
+                  <input type="checkbox" disabled="disabled" checked />
+                <% else %>
+                  <input type="checkbox" disabled="disabled"/>
+                <% end %>
+              </td>
+              <td class="action" >
+                <%= link_to "詳細",new %> | <%= link_to "編輯",edit_news_path(new) %> | <%= link_to "刪除",new,method: :delete,data:{confirm:"您確定要刪除嗎？"} %>
+              </td>
+            </tr>
+          <% end %>
+      <% else %>
+        <tr><td colspan="8" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @news.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @news, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

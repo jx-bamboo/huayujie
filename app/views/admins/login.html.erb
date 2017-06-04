@@ -1,0 +1,34 @@
+<link type="text/css" rel="stylesheet" href="/stylesheets/layout.css" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/admin.css" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/buttons.css" />
+<link type="text/css" rel="stylesheet" href="/stylesheets/entrance.css" />
+<title>登入</title>
+  <div class="commonBox">
+    <h4>登入</h4>
+    <%= form_for :admin, url: {action: "login"},method: "post" do |f| %>
+      <table class="entrBox">
+        <% if flash[:error] %>
+            <p id="notice" style="text-align:center;height:25px;background:#FF3030;padding-top:3px;color:#fff;"><%= flash[:error] %></p><br/>
+        <% end %>
+        <tr>
+          <th><%= f.label :login,"用戶名：" %></th><!--<br>用戶名：-->
+          <td>
+            <!--<input type="text" value="" />-->
+            <%= f.text_field :login ,value:"#{@login}" %>
+          </td>
+        </tr>
+        <tr style="line-height: 24px;height:24px;"><td><br/></td></tr>
+        <tr>
+          <th><%= f.label :password,"密碼：" %></th>
+          <td>
+            <!--<input type="text" value="" />-->
+            <%= f.password_field :password ,value:"#{@pwd}"  %>
+          </td>
+        </tr>
+      </table><br/>
+      <p class="completeBtn">
+        <input type="submit" value="登入" onclick="location.href='/admins/login'" class="button button-raised button-caution" style="width:130px;"/>
+      </p>
+    <% end %>
+
+  </div>

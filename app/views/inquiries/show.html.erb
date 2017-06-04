@@ -1,0 +1,58 @@
+<p id="notice"><%#= notice %></p>
+
+  <script type="text/javascript">
+    Shadowbox.init({
+      skipSetup: true,
+      players: ["iframe"],
+      modal:  true
+    });
+  </script>
+
+  <div class="pgTitle">
+    <h2 class="f_l">詢問詳細</h2>
+    <div class="completeBtn">
+      <input type="button" value="返回" onclick="javascript:history.go(-1)" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <div class="commonBox">
+    <table class="tform">
+      <!--<tr>
+        <th>用戶名</th>
+        <td>login001</td>
+      </tr>-->
+      <tr>
+        <th>姓名</th>
+        <td><%= @inquiry.name %></td>
+      </tr>
+
+      <tr>
+        <th>郵箱</th>
+        <td>
+          <%= @inquiry.email %>
+        </td>
+      </tr>
+      <tr>
+        <th>電話</th>
+        <td>
+          <%= @inquiry.phone %>
+        </td>
+      </tr>
+      <tr>
+        <th>性別</th>
+        <td><%= @inquiry.sex %></td>
+      </tr>
+      <tr>
+        <th>諮詢標題</th>
+        <td><%= @inquiry.title %></td>
+      </tr>
+      <tr>
+        <th>諮詢內容</th>
+        <td><%= @inquiry.content %></td>
+      </tr>
+      <tr>
+        <th>諮詢日期</th>
+        <td><%= @inquiry.inquiry_date.strftime("%Y/%m/%d") %></td>
+      </tr>
+    </table>
+  </div>

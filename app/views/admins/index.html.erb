@@ -1,0 +1,85 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">管理者一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="管理者追加" onclick="location.href='<%= new_admin_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <form method="post" action="/admins/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>用戶名：</th>
+        <td><input type="text" value="<%= @login %>" name="login" /></td>
+        <th>姓名：</th>
+        <td><input type="text" value="<%= @name %>" name="name" /></td>
+        <th>郵箱：</th>
+        <td><input type="text" value="<%= @email %>" name="email" /></td>
+
+      </tr>
+      <!--<tr>
+        <th>電話：</th>
+        <td><input type="text" value="" /></td>
+        <th>性別</th>
+        <td colspan="3">
+          <input type="radio" name="sex" id="man" checked="checked"><label for="man">男</label>&nbsp;&nbsp;
+          <input type="radio" name="sex" id="woman"><label for="woman">女</label>
+        </td>
+      </tr>-->
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  </form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @admins.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @admins, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <th width="74px">NO.</th>
+        <th width="140px">用戶名</th>
+        <th width="83px">姓名</th>
+        <th width="317px">郵箱</th>
+        <th width="215px">電話</th>
+        <th class="action">操作</th>
+      </tr>
+      <% if @admins.present? %>
+          <% @admins.each do |admin| %>
+            <tr>
+              <td align="center"><%= admin.id %></td>
+              <td><%= admin.login %></td>
+              <td><%= admin.name %></td>
+              <td><%= admin.email %></td>
+              <td align="center"><%= admin.phone %></td>
+              <td class="action"><!--<a href="/admin/views/system/admin/detail.html">詳細</a> | -->
+                <%= link_to "編輯",edit_admin_path(admin) %> | <%= link_to "刪除",admin,method: :delete,data:{confirm:"您確定要刪除嗎？"} %>
+              </td>
+            </tr>
+          <% end %>
+      <% else %>
+      <tr><td colspan="6" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @admins.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @admins, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,59 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="pgTitle">
+    <h2 class="f_l">菜單詳細</h2>
+    <div class="completeBtn">
+      <input type="button" value="編輯" onclick="location.href='<%= edit_menu_path(@menu) %>'" class="button button-raised button-primary"/>
+      <input type="button" value="返回" onclick="javascript:history.go(-1)" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+
+  <div class="commonBox">
+    <table class="tform">
+      <tr>
+        <th>菜單名</th>
+        <td><%= @menus.name %></td>
+      </tr>
+      <tr>
+        <th>類別</th>
+        <td>
+          <%= Category.find_by_id(@menus.category_id).try(:name) %>
+        </td>
+      </tr>
+      <tr>
+        <th>菜單種別</th>
+        <td>
+          <%= @menu.get_genre %>
+        </td>
+      </tr>
+      <tr>
+        <th>價格</th>
+        <td><%= @menus.price %></td>
+      </tr>
+      <tr>
+        <th>卡路里</th>
+        <td><%= @menus.calorie %></td>
+      </tr>
+      <tr>
+        <th>鹽</th>
+        <td><%= @menus.salt %></td>
+      </tr>
+      <tr>
+        <th>圖片</th>
+        <td>
+          <%= image_tag @menus.get_attachment, :height => "80" %>
+        </td>
+      </tr>
+      <tr>
+        <th>店鋪名</th>
+        <td>
+          <%= @menus.get_shop_name.join(" , ")%>
+        </td>
+      </tr>
+      <tr>
+        <th>備考</th>
+        <td><%= @menus.memo %></td>
+      </tr>
+    </table>
+  </div>

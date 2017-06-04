@@ -1,0 +1,14 @@
+<p id="notice"><%#= notice %></p>
+
+  <div class="autorTitle">
+    <h2 class="f_l h2_autor">新聞詳細</h2>
+    <div class="completeA">
+      <input type="button" value="編輯" onclick="location.href='<%= edit_news_path %>'" class="button button-raised button-primary"/>
+      <input type="button" value="返回" onclick="location.href='/news'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p class="titleAutor"><%= @news.title %></p>
+  <p class="timeAutor mb10"><%= @news.new_date.strftime("%Y-%m-%d") %></p>
+  <p class="mb10"><%= image_tag @news.get_attachment,:height=>"80" %>
+  <p class="txtAutor"><%= @news.title %><br/><%= @news.content %></p>

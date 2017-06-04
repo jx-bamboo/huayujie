@@ -1,0 +1,113 @@
+<p id="notice"><%#= notice %></p>
+
+  <script language="javascript">
+    $(function() {
+      $( "#from" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        }
+      });
+      $( "#to" ).datepicker({
+        changeMonth: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+          $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        }
+      });
+    });
+
+  </script>
+
+  <div class="pgTitle">
+    <h2 class="f_l">信息一覽</h2>
+    <div class="completeBtn newBtn">
+      <input type="button" value="信息追加" onclick="location.href='<%= new_message_path %>'" class="button button-raised button-primary"/>
+    </div>
+    <hr class="cb" />
+  </div>
+  <p>請輸入檢索條件。</p>
+  <form method="post" action="/messages/index">
+  <div class="searchBox">
+    <table>
+      <tr>
+        <th>作成者：</th>
+        <td><input type="text" value="<%= @admin %>" name="admin" /></td>
+        <th>開始時間：</th>
+        <td><label for="from" style="cursor:pointer">
+          <input type="text" id="from" name="from" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+        </label> ～
+          <label for="to" style="cursor:pointer">
+            <input type="text" id="to" name="to" style="cursor:pointer" class="W100">&nbsp;<img style="vertical-align:middle" src="/images/calendar.png" alt="" />
+          </label>
+        </td>
+        <!--<th>公開狀態：</th>
+        <td><select class="sele_ret">
+            <option></option>
+            <option>草稿 </option>
+            <option>公開中</option>
+            <option>公開過期</option>
+            <option>非公開</option>
+          </select></td>-->
+      </tr>
+    </table>
+    <p>
+      <input type="submit" value="檢索" class="button button-raised button-highlight"/>
+    </p>
+  </div>
+  </form>
+  <div class="commonBox">
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @messages.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @messages, :container => false %>
+        </div>
+      </div>
+    </div>
+    <table class="list">
+      <tr>
+        <!--<th width="5%"><input id="01" type="checkbox" />
+          <label for="01"><br/>
+            全部</label></th>-->
+        <th width="99px">NO.</th>
+        <th width="269px">標題</th>
+        <th width="254px">開始時間</th>
+        <!--<th width="8%">顯示天數</th>-->
+        <th width="8%">作成者</th>
+        <!--<th>公開狀態</th>
+        <th>公開</th>-->
+        <th width="179px">推送對象</th>
+        <th class="action" width="13%">操作</th>
+      </tr>
+      <% if @messages.present? %>
+          <% @messages.each do |msg| %>
+            <tr>
+              <td align="center"><%= msg.id %></td>
+              <td><%= msg.title %></td>
+              <td nowrap="nowrap" align="center"><%= msg.start_time.strftime("%Y/%m/%d") %></td>
+              <td><%= Admin.find_by_id(msg.admin_id).try(:name) %></td>
+              <td align="center"><%= msg.get_send_object %></td>
+              <td class="action">
+                <%= link_to "詳細", msg %> | <%= link_to "編輯",edit_message_path(msg) %> | <%= link_to "刪除",msg,method: :delete,data:{confirm:"您確定要刪除嗎？"} %>
+              </td>
+            </tr>
+          <% end %>
+      <% else %>
+        <tr><td colspan="6" align="center">沒有找到您要的結果。</td></tr>
+      <% end %>
+    </table>
+    <div class="pages mb10 clearfix">
+      <div class="pg-info f_l">
+        檢索結果：<font class="pg-num"><%= @messages.total_entries %></font>件
+      </div>
+      <div class="pagination pagination-info f_r">
+        <div class="digg_pagination">
+          <%= will_paginate @messages, :container => false %>
+        </div>
+      </div>
+    </div>
+  </div>

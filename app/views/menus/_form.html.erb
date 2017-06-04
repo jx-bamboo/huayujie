@@ -1,0 +1,118 @@
+<p id="notice"><%#= notice %></p>
+
+<%= form_for(menu,:html => {:multipart => true}) do |f| %>
+    <%= hidden_field_tag 'id', menu.try(:id) %>
+  <% if menu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(menu.errors.count, "") %> 個錯誤發生:</h2>
+
+      <ul>
+      <% menu.errors.full_messages.each do |message| %>
+        <li style="list-style: none;"><%= message.gsub(" ","") %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <div class="pgTitle">
+    <% if params[:action] == "new" || params[:action] == "create" %>
+      <h2 class="f_l">菜單追加</h2>
+    <% else %>
+      <h2 class="f_l">菜單編輯</h2>
+    <% end %>
+      <div class="completeBtn">
+        <% if params[:action] == "new" || params[:action] == "create" %>
+            <input type="button" value="保存" onclick="isMenuPhone();" class="button button-raised button-primary"/>
+            <input type="button" value="取消" onclick="location.href='/menus'" class="button button-raised button-primary"/>
+        <% else %>
+            <input type="submit" value="更新" onclick="" class="button button-raised button-primary"/>
+            <input type="button" value="取消" onclick="location.href='<%= menu_path %>'" class="button button-raised button-primary"/>
+        <% end %>
+      </div>
+      <hr class="cb" />
+    </div>
+    <p class="mb10"><span class="star_shop">「※」</span>號表示的是必填項。</p>
+    <div class="commonBox">
+      <table class="tform">
+        <tr>
+          <th>菜單名 <span class="star_span">※</span></th>
+          <td>
+            <!--<input type="text" value="駿河灣特產櫻花蝦御結" class="w260"/>-->
+            <%= f.text_field :name,:class=>"w260" %>
+          </td>
+        </tr>
+        <tr>
+          <th>類別 <span class="star_span">※</span></th>
+          <td>
+            <%= collection_select(:menu, :category_id, Category.all, :id,:name,prompt:"請選擇類別" ) %>
+          </td>
+        </tr>
+        <tr>
+          <th>菜單種別 <span class="star_span">※</span></th>
+          <td>
+            <div style="float: left;">
+              <div style="float: left;"><%= check_box_tag "genre1","1" %></div>
+              <div style="float: left;background-color: white;"><%= f.label(:genre, "常規菜單") %></div>
+              <div style="float: left;"><%= check_box_tag "genre2","2" %></div>
+              <div style="float: left;"><%= f.label(:genre, "每週菜單") %></div>
+
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>價格 <span class="star_span">※</span></th>
+          <td valign="center"><div><div style="width:80px;float: left;"><%= f.text_field :price,:size => "6",onkeyup:"chkPrice(this)",onblur:"chkLast()" %></div> <span style="line-height: 28px;">元</span></div></td>
+        </tr>
+        <tr>
+          <th>卡路里 <span class="star_span">※</span></th>
+          <td><div style="width:80px;float: left;"><%= f.text_field :calorie,:size => "6",onkeyup:"chkPrice(this)",onblur:"chkLast()" %></div> <span style="line-height: 28px;">kcal</span></td>
+        </tr>
+        <tr>
+          <th>鹽 <span class="star_span">※</span></th>
+          <td><div style="width:80px;float: left;"><%= f.text_field :salt,:size => "6",onkeyup:"chkPrice(this)",onblur:"chkLast()" %></div> <span style="line-height: 28px;">g</span></td>
+        </tr>
+        <tr>
+          <th>圖片 <span class="star_span">※</span></th>
+          <td>
+            <div id="img_preview"><%= image_tag menu.get_attachment, :height => "80" %></div>
+            <%#= file_field_tag "file_test",:value=>"", :onchange => "$.ajax('/shops/pre.js', {data: 'file_test='+this.value});" %>
+            <%= file_field_tag "file_test", :onchange => "this.form.action='/shops/pre'; this.form.target='iframe'; this.form.submit();" %>
+            <iframe name="iframe" style="display:none;"></iframe>
+          </td>
+        </tr>
+        <tr>
+          <th>店鋪名 <span class="star_span">※</span></th>
+          <td>
+            <input type="text" value="<%= menu.get_shop_name.join(" , ") %>" class="w260" name="shop_name" id="shopNameVal" readonly="true" >
+            <input type="hidden" value="<%= menu.get_shop_id.join(",") %>" class="w260" name="shop_id" id="valueReal" />
+            <input type="button" value="選擇" onclick="openWithSBox('/menus/shop_select','600','800');" class="button button-raised button-action button-tiny"/></td>
+        </tr>
+        <tr>
+          <th>備考 </th>
+          <td><span id="attachments_fields">
+					<!-- <input type="button" name="deleted[1]" id="deleted1" value="削除" onclick="deletedFileField(this);return false;" />-->
+					<textarea class="ckeditor" id="editor1" value="<%= menu.memo %>" rows="10" cols="80" name="attachments[1][description]"></textarea>
+          </span></td>
+        </tr>
+      </table>
+    </div>
+    <%#= f.submit %>
+  </div>
+<% end %>
+<script>
+
+  gen = "<%= @menu.genre %>";
+  if(gen.length<30){
+   if(gen.toString()[7]==1){
+     document.getElementById("genre1").checked=true;
+   }else{
+     document.getElementById("genre2").checked=true;
+   }
+  }else{
+    document.getElementById("genre1").checked=true;
+    document.getElementById("genre2").checked=true;
+  }
+</script>
+
+

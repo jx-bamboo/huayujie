@@ -1,0 +1,38 @@
+﻿@charset "utf-8";
+/* CSS Document */
+#header .top h1{
+	float:none;
+}
+.commonBox{
+	width:60%;
+	margin:50px auto;
+	padding:10px;
+	background-color:#e94d71;
+}
+h4{
+	font-size:16px;
+	color:#fff;
+	margin-bottom:10px;
+}
+form{
+	padding:35px;
+	background-color:#fff;border:1px solid #dedede;
+}
+.entrBox{	
+	width:100%;
+	line-height:30px;
+}
+.entrBox th{
+	padding-right:5px;
+	width:25%;
+	text-align:right;
+	color:#888;
+}
+.entrBox input{
+	width:250px;
+	border:1px solid #ccc;
+	padding:3px;
+}
+.completeBtn{
+	text-align:center;
+}
